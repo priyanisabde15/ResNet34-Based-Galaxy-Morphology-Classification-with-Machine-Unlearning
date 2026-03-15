@@ -1,0 +1,361 @@
+PROJECT EXPLANATION NOTES
+Machine Unlearning in Galaxy Morphology Classification
+
+1. What this project does
+
+This project classifies galaxy images into three morphology classes:
+- Smooth
+- Featured/Disk
+- Artifact
+
+The base classifier is a CNN built using ResNet34 and trained on real Galaxy Zoo 2 images.
+
+But the project is not only about classification.
+The main research contribution is machine unlearning.
+
+We intentionally introduce mislabeled samples into the training data and then apply unlearning methods to remove their influence from the trained model.
+
+So the project solves two problems together:
+- galaxy morphology classification
+- correction of wrong or noisy labels after training
+
+
+2. Why this project is important
+
+In real datasets, especially large human-labeled datasets like Galaxy Zoo 2, not every label is perfectly correct.
+Some labels may be noisy, ambiguous, or simply wrong.
+
+If a model learns from those wrong labels, it can memorize incorrect patterns.
+Normally, the common solution is to retrain the entire model from scratch after removing the wrong samples.
+That is expensive and time-consuming.
+
+Machine unlearning helps because it allows us to reduce or remove the influence of the bad samples from an already trained model.
+
+So the project is useful because it shows that:
+- we can build a strong galaxy classifier
+- we can detect the effect of noisy labels
+- we can correct that effect using unlearning methods
+- we do not always need full retraining immediately
+
+
+3. How our project benefits from unlearning
+
+Our project directly benefits from unlearning in the following ways:
+
+1. It makes the model more realistic for scientific use
+Real astronomy datasets are not perfectly clean.
+If some galaxy images are mislabeled, unlearning gives us a way to correct the trained model later.
+
+2. It improves trust in the model
+Instead of ignoring noisy labels, we explicitly study how to remove their impact.
+That makes the model more reliable.
+
+3. It avoids unnecessary retraining
+Training deep learning models again and again is costly in time and computation.
+Unlearning provides faster alternatives.
+
+4. It increases research value
+This is not just a normal CNN classification project.
+It becomes a research project because it studies what happens when data is wrong and how a trained model can forget wrong information.
+
+5. It supports future privacy and data removal applications
+Machine unlearning is also relevant to “right to remove data” settings.
+So the same idea can be extended beyond astronomy.
+
+Simple one-line explanation:
+Unlearning helps our model forget the effect of mislabeled galaxy images, so we can correct the trained model efficiently without always retraining from scratch.
+
+
+4. Why we specifically used ResNet34
+
+We used ResNet34 because it gave the best balance between accuracy and hardware feasibility for our setup.
+
+Why not smaller models like ResNet18?
+- ResNet18 is lighter, but it has lower representational capacity.
+- Our project required stronger feature extraction to improve accuracy on real galaxy images.
+- ResNet34 performed better while still remaining manageable on our GPU.
+
+Why not larger models like ResNet50?
+- ResNet50 is more powerful, but our laptop GPU has only 4 GB VRAM.
+- A larger model would increase memory use and training instability.
+- It would also be slower and less practical for repeated experiments.
+
+Why ResNet34 was the right choice:
+- stronger than ResNet18
+- safer than ResNet50 on 4 GB VRAM
+- supports transfer learning well
+- captures image texture, edges, structure, and shape effectively
+- practical for our mixed-precision training setup
+
+In short:
+ResNet34 gave us the best trade-off between model strength, memory usage, and practical training time.
+
+
+5. How ResNet34 helps in our project
+
+Galaxy morphology classification depends on visual structure:
+- smooth light distribution
+- spiral or disk patterns
+- irregular or artifact-like shapes
+
+ResNet34 helps because:
+- it uses residual connections, which make deeper training stable
+- it can learn hierarchical image features
+- it transfers well from ImageNet pretraining
+- it captures morphology better than very small CNNs
+
+So in our project, ResNet34 is the backbone that makes the classification stage strong enough for the unlearning stage to actually matter.
+
+
+6. Our dataset and setup
+
+We used:
+- Galaxy Zoo 2 dataset
+- real training images
+- three top-level classes:
+  Smooth, Featured/Disk, Artifact
+
+Training setup in our project:
+- pretrained ResNet34
+- image resize to 224 x 224
+- mixed precision training
+- batch size adjusted for 4 GB VRAM
+- checkpoint saving
+- training log generation
+- plots generation
+
+We also worked with real project outputs such as:
+- best_model.pth
+- ga_unlearned_model.pth
+- ff_unlearned_model.pth
+- retrained_model.pth
+- training_log.csv
+- unlearning_results.csv
+
+
+7. Why machine unlearning is the most important part of this project
+
+Classification tells us what the model predicts.
+Unlearning tells us how to correct the model when some of what it learned was wrong.
+
+That is why unlearning is the core research element.
+
+Without unlearning, this would only be a galaxy classification project.
+With unlearning, it becomes a more advanced project about:
+- noisy label correction
+- model repair
+- selective forgetting
+- efficient alternatives to retraining
+
+
+8. Direct implementation of unlearning in our project
+
+In our project, we first trained the base classifier.
+Then we created a forget set by intentionally mislabeling part of the training data.
+The model trained with this noisy information becomes the starting point for unlearning.
+
+We then evaluated three methods:
+- Gradient Ascent Unlearning
+- Fisher Forgetting
+- Full Retraining
+
+These were applied in our code to compare:
+- how well each method forgets bad data
+- how much correct knowledge is preserved
+- how much time each method takes
+
+
+9. Method 1: Gradient Ascent Unlearning in our project
+
+Idea:
+Normally, training reduces loss.
+Gradient ascent does the opposite on the forget set.
+It increases loss on the mislabeled samples.
+
+In our project context:
+- the forget set contains wrongly labeled galaxy images
+- the model had learned those wrong associations
+- gradient ascent pushes the model away from those wrong patterns
+
+What it means simply:
+If the model became confident about a wrong label, gradient ascent tries to make the model unlearn that confidence.
+
+Why it matters in our project:
+- it is faster than full retraining
+- it directly targets the corrupted samples
+- it is easy to understand and implement
+
+Expected effect:
+- forget accuracy should drop
+- retain accuracy should stay as high as possible
+
+
+10. Method 2: Fisher Forgetting in our project
+
+Idea:
+Not all model weights are equally important.
+Some are very important for correct knowledge.
+Some are less important.
+
+Fisher Forgetting estimates parameter importance using Fisher information.
+Then it adds noise in a controlled way:
+- less noise to important parameters
+- more noise to less important parameters
+
+In our project context:
+- retain set = correctly labeled galaxy samples
+- Fisher information is computed using the retain data
+- the model is perturbed so that wrong information is weakened while useful information is preserved
+
+Why it matters in our project:
+- it is a more mathematically informed unlearning method
+- it tries to be selective instead of blindly damaging the model
+- it helps us compare a structured parameter-based forgetting method against gradient ascent
+
+Simple explanation:
+Fisher Forgetting tries to forget bad data more carefully by protecting weights that are important for correct galaxy classification.
+
+
+11. Method 3: Full Retraining in our project
+
+Idea:
+Remove the bad samples and train again from scratch.
+
+In our project context:
+- we exclude the mislabeled galaxy images
+- we retrain only on the clean retain set
+
+Why it matters:
+- it is the gold-standard baseline
+- it tells us what ideal forgetting should look like
+- the other unlearning methods are compared against it
+
+Main drawback:
+- it is the slowest and most expensive method
+
+So in our project, full retraining is not the most efficient method, but it is the reference point for quality.
+
+
+12. How we compare the 3 unlearning methods
+
+We compare the methods using:
+
+1. Test Accuracy
+How well the model performs overall on clean test data.
+
+2. Forget Accuracy
+How well the model still predicts the mislabeled samples.
+Lower is better, because it means the model has forgotten them.
+
+3. Retain Accuracy
+How well the model still performs on correct retained samples.
+Higher is better.
+
+4. Computation Time
+How long the method takes.
+
+This comparison is important because a good unlearning method should:
+- forget wrong information
+- preserve correct information
+- be efficient
+
+
+13. What we implemented beyond the theory
+
+Our project is not only theoretical.
+We implemented real engineering steps:
+
+- training on GPU
+- mixed precision for memory efficiency
+- saved checkpoints
+- training metrics logging
+- plots generation
+- unlearned model saving
+- interactive Streamlit dashboard
+- result comparison tables
+
+This makes the project practical and demonstrable, not just conceptual.
+
+
+14. Dashboard explanation in simple words
+
+Our Streamlit dashboard has three major purposes:
+
+1. Classification Demo
+Shows how the trained model classifies a galaxy image.
+
+2. Unlearning Dashboard
+Shows the effect of different unlearning methods and compares them.
+
+3. Training Metrics View
+Shows how the model learned over epochs and whether the training was stable.
+
+So the dashboard is useful for presentation because it shows:
+- model output
+- training behavior
+- unlearning behavior
+- final results
+
+
+15. Why our project is stronger than a normal CNN project
+
+A normal CNN project usually stops at:
+- train model
+- test model
+- show accuracy
+
+Our project goes beyond that:
+- we address label noise
+- we repair a trained model
+- we compare multiple unlearning strategies
+- we evaluate forgetting, retention, and computation time
+- we provide both research paper output and dashboard output
+
+That gives the project much stronger academic value.
+
+
+16. Future scope
+
+This project has a lot of future scope.
+
+1. Better handling of class imbalance
+The Artifact class is very small.
+Future work can use better balancing, more samples, or better sampling strategies.
+
+2. Real mislabeled sample identification
+Currently we simulate mislabels.
+Future work can identify real uncertain or incorrect labels from astronomy experts.
+
+3. More advanced unlearning methods
+Newer machine unlearning methods can be added and benchmarked.
+
+4. Certified unlearning
+Future work can explore formal or certified guarantees of forgetting.
+
+5. Better astronomy-specific architectures
+Future work can test transformers or astronomy-specialized CNNs.
+
+6. Multi-class and hierarchical morphology
+Galaxy Zoo has more detailed decision-tree labels.
+The project can be extended beyond just 3 classes.
+
+7. Deployment for scientific workflows
+The pipeline can be adapted for real data correction in astronomy pipelines or observatory archives.
+
+8. Privacy and regulation applications
+The same system idea can be extended to domains where training data must later be removed for legal or ethical reasons.
+
+
+17. Final takeaway
+
+This project proves that machine unlearning can be practically applied to galaxy morphology classification.
+
+It shows that:
+- ResNet34 can classify galaxies effectively on real data
+- noisy labels are a serious problem
+- unlearning can reduce the effect of wrong labels
+- different unlearning methods have different trade-offs
+- all of this can be implemented on a consumer GPU with a real dashboard and usable outputs
+
+One final presentation line:
+Our project is not just about classifying galaxies. It is about building a model that can learn, detect the impact of noisy labels, and then selectively forget wrong information in an efficient and scientifically meaningful way.
