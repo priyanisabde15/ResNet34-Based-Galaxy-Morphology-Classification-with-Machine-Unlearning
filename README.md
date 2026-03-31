@@ -15,7 +15,7 @@ The system is optimized for RTX 3050 4GB VRAM with mixed precision training and 
 ## Features
 
 - **3-Class Galaxy Classification**: Smooth, Featured/Disk, Artifact
-- **Simulated Noisy Data**: Intentionally mislabels 12% of training data
+- **Simulated Noisy Data**: Intentionally mislabels 10-12% of training data
 - **Memory Optimized**: Batch size 16, mixed precision, RTX 3050 4GB friendly
 - **Comprehensive Evaluation**: Test accuracy, forget accuracy, retain accuracy, computation time
 - **Interactive Web UI**: Streamlit dashboard for classification and unlearning visualization
