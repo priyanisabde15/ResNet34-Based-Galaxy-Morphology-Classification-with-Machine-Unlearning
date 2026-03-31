@@ -11,7 +11,7 @@ Implement and compare machine unlearning techniques to efficiently correct misla
 1. **data_loader.py** (270 lines)
    - Galaxy Zoo 2 dataset loader with 3 classes
    - Real Galaxy Zoo 2 training workflow with saved checkpoints
-   - Intentional mislabeling injection (10-15%)
+   - Intentional mislabeling injection (12%)
    - Memory-efficient data loading pipeline
 
 2. **model.py** (180 lines)

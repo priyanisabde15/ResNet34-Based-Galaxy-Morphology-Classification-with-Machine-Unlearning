@@ -401,7 +401,7 @@ if __name__ == "__main__":
     parser.add_argument('--backbone', choices=['resnet18', 'resnet34', 'resnet50'], default='resnet34')
     parser.add_argument('--target-acc', type=float, default=80.0)
     parser.add_argument('--patience', type=int, default=10)
-    parser.add_argument('--mislabel-ratio', type=float, default=0.10)
+    parser.add_argument('--mislabel-ratio', type=float, default=0.12)
     parser.add_argument('--unlearn-results-path', type=str, default='unlearning_results.csv')
     parser.add_argument('--no-unlearning', action='store_true', help='Skip unlearning tests if set')
 

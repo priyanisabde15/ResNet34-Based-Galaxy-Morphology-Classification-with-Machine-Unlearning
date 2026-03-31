@@ -27,7 +27,7 @@ Create the following files:
 - Use Galaxy Zoo 2 dataset from Kaggle
 - Classes: Smooth, Featured/Disk, Artifact (3 classes)
 - Split: 70% train, 15% val, 15% test
-- Intentionally mislabel 10-15% of training samples
+- Intentionally mislabel 12% of training samples
 to simulate noisy astronomical data
 - If dataset not found, create a realistic simulation
 using random galaxy-like image tensors as fallback
