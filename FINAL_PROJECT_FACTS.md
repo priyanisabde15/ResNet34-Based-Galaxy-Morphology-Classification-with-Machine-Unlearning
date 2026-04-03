@@ -28,16 +28,20 @@ Mapped class counts in the current dataset:
 From the current final training pipeline:
 - Script: `train.py`
 - Optimizer: `AdamW`
+- Scheduler: `CosineAnnealingLR`
 - Loss: `FocalLoss` by default
 - Input size: `224 x 224`
 - Data split: `70 / 15 / 15`
 - Random seed: `42`
+- Batch size: `16`
+- Maximum epochs: `50`
+- Initial learning rate: `2e-4`
+- Early stopping patience: `12`
 - Mixed precision on CUDA: `enabled`
-- Early stopping: `enabled`
 - Best checkpoint path: `best_model.pth`
 
 Important note:
-- The current code defaults and the saved successful run are not identical in every numeric detail.
+- The repo has been updated to match the configuration implied by the saved successful run as closely as possible.
 - The saved run values below come from the actual CSV logs already present in the repo.
 
 ## 4. Saved Training Run Facts
@@ -124,7 +128,7 @@ If you only need to present the project:
 
 These should be unified next before the final paper/repo lock:
 - choose one official mislabel ratio for the final release: `10%` or `12%`
-- choose one official training configuration summary for the paper
+- paper should now use the saved-run-aligned training configuration: `50 epochs max`, `16 batch`, `2e-4`, `AdamW`, `CosineAnnealingLR`, `patience 12`
 - remove or archive any legacy result references that still point to the old ~33% run
 - make the paper dataset counts match the actual final dataset counts in this repo
 

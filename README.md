@@ -31,9 +31,10 @@ The three output classes are:
 
 From `training_log.csv`:
 - Best validation accuracy: `85.58%`
-- Best balanced accuracy: `87.56%`
-- Best macro-F1: `76.41%`
+- Best balanced accuracy across the run: `87.56%`
+- Best macro-F1 across the run: `76.41%`
 - Epochs completed in the saved run: `19`
+- Configuration that best matches the saved run: `ResNet34`, `batch size 16`, `max epochs 50`, `lr 2e-4`, `patience 12`, `AdamW`, `CosineAnnealingLR`
 
 ### Unlearning
 
@@ -67,7 +68,7 @@ streamlit run app.py
 ### 2. Train again only if you want a new experiment
 
 ```bash
-python train.py --device auto --epochs 30 --batch-size 16 --lr 3e-4 --backbone resnet34 --patience 12
+python train.py --device auto --epochs 50 --batch-size 16 --lr 2e-4 --backbone resnet34 --patience 12
 ```
 
 ### 3. Run unlearning from the saved checkpoint

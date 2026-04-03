@@ -43,19 +43,21 @@ MODEL_NAME = 'resnet34'
 # ============================================================================
 
 # Number of training epochs
-NUM_EPOCHS = 30
+NUM_EPOCHS = 50
 
 # Learning rate
-LEARNING_RATE = 0.0003
+LEARNING_RATE = 0.0002
 
 # Optimizer settings
-OPTIMIZER = 'adam'  # 'adam' or 'sgd'
+OPTIMIZER = 'adamw'  # final saved run used AdamW
 WEIGHT_DECAY = 0.0001
 
 # Learning rate scheduler
 USE_SCHEDULER = True
+SCHEDULER_NAME = "CosineAnnealingLR"
+SCHEDULER_ETA_MIN = 1e-6
 SCHEDULER_PATIENCE = 3
-SCHEDULER_FACTOR = 0.5
+SCHEDULER_FACTOR = 0.5  # legacy field kept for older paths
 
 # ============================================================================
 # DATA SETTINGS
@@ -83,7 +85,7 @@ AUGMENTATION = {
 }
 
 # Use simulated data if real dataset not found
-USE_SIMULATION_FALLBACK = True
+USE_SIMULATION_FALLBACK = False
 SIMULATED_SAMPLES = 3000
 
 # ============================================================================
@@ -102,7 +104,7 @@ RANDOM_SEED = 42
 
 # Gradient Ascent Unlearning
 GRADIENT_ASCENT = {
-    'num_epochs': 5,
+    'num_epochs': 3,
     'learning_rate': 0.0001
 }
 
@@ -113,8 +115,8 @@ FISHER_FORGETTING = {
 
 # Full Retrain
 FULL_RETRAIN = {
-    'num_epochs': 15,
-    'learning_rate': 0.001
+    'num_epochs': 10,
+    'learning_rate': 0.0002
 }
 
 # ============================================================================

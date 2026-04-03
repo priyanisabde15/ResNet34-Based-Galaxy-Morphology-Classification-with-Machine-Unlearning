@@ -61,7 +61,7 @@ class UnlearningMethods:
     
     def gradient_ascent_unlearning(self,
                                    forget_loader: DataLoader,
-                                   num_epochs: int = 5,
+                                   num_epochs: int = 3,
                                    learning_rate: float = 0.0001) -> Tuple[GalaxyCNN, float]:
         """
         Gradient Ascent Unlearning: Maximize loss on forget set
@@ -206,8 +206,8 @@ class UnlearningMethods:
     def full_retrain(self,
                     train_loader: DataLoader,
                     val_loader: DataLoader,
-                    num_epochs: int = 15,
-                    learning_rate: float = 0.001) -> Tuple[GalaxyCNN, float]:
+                    num_epochs: int = 10,
+                    learning_rate: float = 0.0002) -> Tuple[GalaxyCNN, float]:
         """
         Full Retrain: Train from scratch on clean data (gold standard)
         
@@ -355,7 +355,7 @@ if __name__ == "__main__":
     parser.add_argument('--ga-lr', type=float, default=1e-4)
     parser.add_argument('--fisher-noise', type=float, default=0.01)
     parser.add_argument('--retrain-epochs', type=int, default=10)
-    parser.add_argument('--retrain-lr', type=float, default=3e-4)
+    parser.add_argument('--retrain-lr', type=float, default=2e-4)
     parser.add_argument('--results-path', type=str, default='unlearning_results.csv')
     args = parser.parse_args()
 

@@ -395,9 +395,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Galaxy morphology training + unlearning evaluation')
     parser.add_argument('--device', choices=['auto', 'cuda', 'cpu'], default='auto')
     parser.add_argument('--require-gpu', action='store_true', help='Fail if GPU is not available')
-    parser.add_argument('--epochs', type=int, default=30)
+    parser.add_argument('--epochs', type=int, default=50)
     parser.add_argument('--batch-size', type=int, default=16)
-    parser.add_argument('--lr', type=float, default=3e-4)
+    parser.add_argument('--lr', type=float, default=2e-4)
     parser.add_argument('--backbone', choices=['resnet18', 'resnet34', 'resnet50'], default='resnet34')
     parser.add_argument('--target-acc', type=float, default=80.0)
     parser.add_argument('--patience', type=int, default=12)
@@ -419,7 +419,7 @@ if __name__ == "__main__":
     print('\n📥 Loading data...')
     train_loader, val_loader, test_loader, dataset, train_indices, class_weights = get_data_loaders(
         batch_size=args.batch_size,
-        num_workers=4
+        num_workers=2
     )
 
     # Model
