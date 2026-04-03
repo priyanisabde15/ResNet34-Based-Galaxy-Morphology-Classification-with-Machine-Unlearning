@@ -1,5 +1,7 @@
 START HERE - FINAL PROJECT VERSION
 
+Before anything else, read: FIRST_READ_THIS.md
+
 Project title:
 ResNet34-Based Galaxy Morphology Classification with Machine Unlearning
 

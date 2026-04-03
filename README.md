@@ -2,6 +2,8 @@
 
 This repository contains the final project version of our Galaxy Zoo 2 classifier and machine unlearning pipeline. It is centered on a ResNet34 backbone, real Galaxy Zoo 2 data, saved checkpoints, logged experiments, and a Streamlit dashboard for classification and result visualization.
 
+Read `FIRST_READ_THIS.md` first if you are opening the project for the first time.
+
 ## Final Repo Scope
 
 This project is about two linked tasks:
