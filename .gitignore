@@ -61,3 +61,18 @@ Thumbs.db
 
 # Streamlit
 .streamlit/
+
+# Local temp
+.tmp/
+training_terminal.txt
+*_oldlog.csv
+*_backup_before_retrain.csv
+
+# Final repo outputs to keep
+!training_log.csv
+!unlearning_results.csv
+!plots/
+!plots/*.png
+
+# Keep old legacy result file out of final repo story
+results.csv

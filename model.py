@@ -1,6 +1,6 @@
 """
 Galaxy Morphology CNN Model
-ResNet18-based architecture optimized for 4GB VRAM
+ResNet34-based architecture for the final 3-class project setup
 """
 
 import torch
@@ -52,13 +52,12 @@ class GalaxyCNN(nn.Module):
             nn.Linear(num_features, num_classes)
         )
         
-        # Enable gradient checkpointing to save memory
+        # Gradient checkpointing is currently kept disabled in this final repo state
         self._enable_gradient_checkpointing()
     
     def _enable_gradient_checkpointing(self):
         """Enable gradient checkpointing for memory efficiency"""
-        # Disabled for now to avoid recursion issues
-        # Can be enabled manually if needed for very large batches
+        # Currently disabled in the final repo to keep behaviour stable and explicit
         pass
     
     def forward(self, x: torch.Tensor) -> torch.Tensor:
