@@ -33,7 +33,7 @@ This uses the saved model and saved CSV outputs already present in the project f
 ## 4. Train a fresh classifier only if needed
 
 ```bash
-python train.py --device auto --backbone resnet34
+python train.py --device auto --epochs 30 --batch-size 16 --lr 3e-4 --backbone resnet34 --patience 12
 ```
 
 Use this when you want a new experiment, not when you only want to demo the project.

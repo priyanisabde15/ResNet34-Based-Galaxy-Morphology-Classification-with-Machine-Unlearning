@@ -61,7 +61,7 @@ data/
 Run:
 
 ```bash
-python train.py --device auto --backbone resnet34
+python train.py --device auto --epochs 30 --batch-size 16 --lr 3e-4 --backbone resnet34 --patience 12
 ```
 
 This will train the ResNet34 classifier and save the best checkpoint.

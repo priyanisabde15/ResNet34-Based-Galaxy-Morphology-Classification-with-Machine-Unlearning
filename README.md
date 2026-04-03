@@ -67,7 +67,7 @@ streamlit run app.py
 ### 2. Train again only if you want a new experiment
 
 ```bash
-python train.py --device auto --backbone resnet34
+python train.py --device auto --epochs 30 --batch-size 16 --lr 3e-4 --backbone resnet34 --patience 12
 ```
 
 ### 3. Run unlearning from the saved checkpoint
